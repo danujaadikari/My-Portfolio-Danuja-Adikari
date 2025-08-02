@@ -15,6 +15,381 @@ body {
     color: #e6edf3;
     line-height: 1.6;
     overflow-x: hidden;
+    transition: all 0.3s ease;
+}
+
+body.light-theme {
+    background-color: #ffffff;
+    color: #24292f;
+}
+
+/* Loading Screen */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #010409 0%, #0d1117 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.loading-screen.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loading-container {
+    text-align: center;
+    animation: fadeInUp 1s ease;
+}
+
+.loading-logo {
+    font-size: 4rem;
+    font-weight: 700;
+    color: #58a6ff;
+    margin-bottom: 2rem;
+    animation: pulse 2s infinite;
+}
+
+.loading-bar {
+    width: 300px;
+    height: 4px;
+    background: #21262d;
+    border-radius: 2px;
+    overflow: hidden;
+    margin: 0 auto 1rem;
+}
+
+.loading-progress {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #58a6ff, #79c0ff);
+    border-radius: 2px;
+    animation: loadingProgress 3s ease-in-out;
+}
+
+.loading-message {
+    color: #7d8590;
+    font-size: 1rem;
+    margin-top: 1rem;
+}
+
+@keyframes loadingProgress {
+    0% { width: 0%; }
+    100% { width: 100%; }
+}
+
+/* Cursor Trail */
+#cursor-trail {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle, #58a6ff, transparent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    mix-blend-mode: difference;
+    transition: transform 0.1s ease;
+}
+
+/* Theme Toggle */
+.theme-toggle {
+    position: fixed;
+    top: 50%;
+    right: 30px;
+    transform: translateY(-50%);
+    width: 60px;
+    height: 30px;
+    background: #21262d;
+    border-radius: 15px;
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+    transition: all 0.3s ease;
+    border: 2px solid #58a6ff;
+}
+
+.theme-toggle i {
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle .fa-sun {
+    color: #ffd700;
+    transform: scale(0.8);
+}
+
+.theme-toggle .fa-moon {
+    color: #58a6ff;
+    transform: scale(1.2);
+}
+
+.theme-toggle.light .fa-sun {
+    transform: scale(1.2);
+}
+
+.theme-toggle.light .fa-moon {
+    transform: scale(0.8);
+}
+
+/* Scroll Progress Bar */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: rgba(33, 38, 45, 0.5);
+    z-index: 1001;
+}
+
+.scroll-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #58a6ff, #79c0ff, #a5f3fc);
+    width: 0%;
+    transition: width 0.1s ease;
+    box-shadow: 0 0 10px #58a6ff;
+}
+
+/* Particles.js */
+#particles-js {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+
+/* Matrix Rain Effect */
+.matrix-rain {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0.1;
+}
+
+#matrix-canvas {
+    width: 100%;
+    height: 100%;
+}
+
+/* Glitch Effect */
+.glitch {
+    position: relative;
+    animation: glitch 2s infinite;
+}
+
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+}
+
+.glitch::before {
+    animation: glitch-anim 0.3s infinite;
+    color: #ff0000;
+    z-index: -1;
+}
+
+.glitch::after {
+    animation: glitch-anim2 0.3s infinite;
+    color: #00ff00;
+    z-index: -2;
+}
+
+@keyframes glitch {
+    0%, 74%, 76%, 100% {
+        transform: translate(0);
+    }
+    75% {
+        transform: translate(-2px, 2px);
+    }
+}
+
+@keyframes glitch-anim {
+    0%, 74%, 76%, 100% {
+        transform: translate(0);
+    }
+    75% {
+        transform: translate(2px, -2px);
+    }
+}
+
+@keyframes glitch-anim2 {
+    0%, 20%, 21%, 100% {
+        transform: translate(0);
+    }
+    20% {
+        transform: translate(-2px, 2px);
+    }
+}
+
+/* Counter Animation */
+.counter {
+    display: inline-block;
+}
+
+/* Magnetic Button Effect */
+.magnetic-btn {
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+/* Button Ripple Effect */
+.btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.6);
+    transform: scale(0);
+    animation: ripple 0.6s linear;
+    pointer-events: none;
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* Tooltip */
+[data-tooltip] {
+    position: relative;
+}
+
+[data-tooltip]:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #21262d;
+    color: #e6edf3;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    white-space: nowrap;
+    z-index: 1000;
+    border: 1px solid #58a6ff;
+}
+
+[data-tooltip]:hover::before {
+    content: '';
+    position: absolute;
+    bottom: 95%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #21262d;
+    z-index: 1000;
+}
+
+/* Enhanced Avatar Effects */
+.avatar-glow {
+    position: absolute;
+    top: -30px;
+    left: -30px;
+    width: 360px;
+    height: 360px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(88, 166, 255, 0.3), transparent);
+    animation: pulse-glow 3s ease-in-out infinite;
+    z-index: 0;
+}
+
+@keyframes pulse-glow {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+    }
+}
+
+.hologram-effect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: linear-gradient(45deg, transparent 30%, rgba(88, 166, 255, 0.1) 50%, transparent 70%);
+    animation: hologram 2s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes hologram {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+/* Additional Orbits */
+.orbit-5 {
+    width: 540px;
+    height: 540px;
+    top: -70px;
+    left: -70px;
+    animation-duration: 40s;
+}
+
+.orbit-6 {
+    width: 580px;
+    height: 580px;
+    top: -90px;
+    left: -90px;
+    animation-duration: 45s;
+    animation-direction: reverse;
+}
+
+/* Floating Animation for Tech Icons */
+.floating {
+    animation: floating 3s ease-in-out infinite;
+}
+
+@keyframes floating {
+    0%, 100% {
+        transform: translateX(-50%) translateY(0px);
+    }
+    50% {
+        transform: translateX(-50%) translateY(-10px);
+    }
+}
+
+/* Enhanced Stats */
+.stat-plus {
+    color: #58a6ff;
+    font-weight: 700;
 }
 
 /* Container */
