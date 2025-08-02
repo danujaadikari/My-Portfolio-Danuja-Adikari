@@ -145,10 +145,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         
         if (scrollTop > 100) {
-            navbar.style.background = 'rgba(13, 17, 23, 0.98)';
-            navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.3)';
+            navbar.style.background = 'rgba(1, 4, 9, 0.98)';
+            navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.5)';
         } else {
-            navbar.style.background = 'rgba(13, 17, 23, 0.95)';
+            navbar.style.background = 'rgba(1, 4, 9, 0.95)';
             navbar.style.boxShadow = 'none';
         }
         
