@@ -1,20 +1,121 @@
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
     
+    // Typewriter Effect
+    class TypeWriter {
+        constructor(element, words, wait = 3000) {
+            this.element = element;
+            this.words = words;
+            this.wait = parseInt(wait, 10);
+            this.wordIndex = 0;
+            this.txt = '';
+            this.isDeleting = false;
+            this.type();
+        }
+
+        type() {
+            const current = this.wordIndex % this.words.length;
+            const fullTxt = this.words[current];
+
+            if (this.isDeleting) {
+                this.txt = fullTxt.substring(0, this.txt.length - 1);
+            } else {
+                this.txt = fullTxt.substring(0, this.txt.length + 1);
+            }
+
+            this.element.innerHTML = `<span class="txt">${this.txt}</span>`;
+
+            let typeSpeed = 150;
+
+            if (this.isDeleting) {
+                typeSpeed /= 2;
+            }
+
+            if (!this.isDeleting && this.txt === fullTxt) {
+                typeSpeed = this.wait;
+                this.isDeleting = true;
+            } else if (this.isDeleting && this.txt === '') {
+                this.isDeleting = false;
+                this.wordIndex++;
+                typeSpeed = 500;
+            }
+
+            setTimeout(() => this.type(), typeSpeed);
+        }
+    }
+
+    // Initialize TypeWriter
+    const typeWriter = document.querySelector('.typewriter');
+    if (typeWriter) {
+        const words = JSON.parse(typeWriter.getAttribute('data-text'));
+        new TypeWriter(typeWriter, words, 2000);
+    }
+
+    // Parallax Effect for Hero Background
+    function handleParallax() {
+        const scrolled = window.pageYOffset;
+        const shapes = document.querySelectorAll('.shape');
+        shapes.forEach((shape, index) => {
+            const speed = (index + 1) * 0.5;
+            shape.style.transform = `translateY(${scrolled * speed}px)`;
+        });
+    }
+
+    // Smooth reveal animations on scroll
+    function handleScrollAnimations() {
+        const elements = document.querySelectorAll('[data-reveal]');
+        elements.forEach(element => {
+            const elementTop = element.getBoundingClientRect().top;
+            const elementVisible = 150;
+            
+            if (elementTop < window.innerHeight - elementVisible) {
+                element.classList.add('revealed');
+            }
+        });
+    }
+
+    // Add data-reveal attributes to elements that should animate
+    const animatedElements = document.querySelectorAll('.hero-greeting, .hero-title, .hero-subtitle-wrapper, .hero-description, .hero-stats, .hero-buttons, .social-links, .hero-image');
+    animatedElements.forEach((el, index) => {
+        el.setAttribute('data-reveal', 'true');
+        el.style.transitionDelay = `${index * 0.1}s`;
+    });
+
+    // Performance-optimized scroll handler
+    let ticking = false;
+    function updateOnScroll() {
+        handleParallax();
+        handleScrollAnimations();
+        highlightNavLink();
+        updateNavbar();
+        ticking = false;
+    }
+
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(updateOnScroll);
+            ticking = true;
+        }
+    }
+
     // Mobile Navigation Toggle
     const hamburger = document.getElementById('hamburger');
     const navMenu = document.getElementById('nav-menu');
     
-    hamburger.addEventListener('click', function() {
-        hamburger.classList.toggle('active');
-        navMenu.classList.toggle('active');
-    });
+    if (hamburger && navMenu) {
+        hamburger.addEventListener('click', function() {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+    }
     
     // Close mobile menu when clicking on a link
     document.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('click', function() {
-            hamburger.classList.remove('active');
-            navMenu.classList.remove('active');
+            if (hamburger && navMenu) {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
         });
     });
     
@@ -40,7 +141,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const navbar = document.querySelector('.navbar');
     let lastScrollTop = 0;
     
-    window.addEventListener('scroll', function() {
+    function updateNavbar() {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         
         if (scrollTop > 100) {
@@ -52,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         lastScrollTop = scrollTop;
-    });
+    }
     
     // Active navigation link highlighting
     const sections = document.querySelectorAll('section[id]');
@@ -77,7 +178,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    window.addEventListener('scroll', highlightNavLink);
+    // Optimized scroll event listener
+    window.addEventListener('scroll', requestTick, { passive: true });
     
     // Intersection Observer for fade-in animations
     const observerOptions = {
@@ -95,8 +197,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }, observerOptions);
     
     // Observe elements for animation
-    const animatedElements = document.querySelectorAll('.about-item, .project-card, .tech-item, .stat-card, .languages-card');
-    animatedElements.forEach(el => {
+    const animatedCards = document.querySelectorAll('.about-item, .project-card, .tech-item, .stat-card, .languages-card');
+    animatedCards.forEach(el => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(30px)';
         el.style.transition = 'all 0.6s ease';
