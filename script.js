@@ -1,8 +1,230 @@
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
     
-    // Typewriter Effect
-    class TypeWriter {
+    // Loading Screen
+    const loadingScreen = document.getElementById('loading-screen');
+    const loadingProgress = document.querySelector('.loading-progress');
+    
+    let progress = 0;
+    const loadingInterval = setInterval(() => {
+        progress += Math.random() * 15;
+        if (progress >= 100) {
+            progress = 100;
+            clearInterval(loadingInterval);
+            setTimeout(() => {
+                loadingScreen.classList.add('hidden');
+                initializeAnimations();
+            }, 500);
+        }
+        loadingProgress.style.width = progress + '%';
+    }, 150);
+
+    // Initialize AOS
+    function initializeAnimations() {
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100
+        });
+    }
+
+    // Particles.js Configuration
+    if (typeof particlesJS !== 'undefined') {
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: '#58a6ff' },
+                shape: { type: 'circle' },
+                opacity: { value: 0.5, random: false },
+                size: { value: 3, random: true },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: '#58a6ff',
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 6,
+                    direction: 'none',
+                    random: false,
+                    straight: false,
+                    out_mode: 'out',
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: { enable: true, mode: 'repulse' },
+                    onclick: { enable: true, mode: 'push' },
+                    resize: true
+                },
+                modes: {
+                    grab: { distance: 400, line_linked: { opacity: 1 } },
+                    bubble: { distance: 400, size: 40, duration: 2, opacity: 8, speed: 3 },
+                    repulse: { distance: 200, duration: 0.4 },
+                    push: { particles_nb: 4 },
+                    remove: { particles_nb: 2 }
+                }
+            },
+            retina_detect: true
+        });
+    }
+
+    // Matrix Rain Effect
+    const canvas = document.getElementById('matrix-canvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    const matrix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|`]}";
+    const matrixArray = matrix.split("");
+    const fontSize = 10;
+    const columns = canvas.width / fontSize;
+    const drops = [];
+
+    for (let x = 0; x < columns; x++) {
+        drops[x] = 1;
+    }
+
+    function drawMatrix() {
+        ctx.fillStyle = 'rgba(1, 4, 9, 0.04)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        ctx.fillStyle = '#58a6ff';
+        ctx.font = fontSize + 'px monospace';
+
+        for (let i = 0; i < drops.length; i++) {
+            const text = matrixArray[Math.floor(Math.random() * matrixArray.length)];
+            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                drops[i] = 0;
+            }
+            drops[i]++;
+        }
+    }
+
+    setInterval(drawMatrix, 35);
+
+    // Cursor Trail Effect
+    const cursorTrail = document.getElementById('cursor-trail');
+    let mouseX = 0, mouseY = 0;
+    let trailX = 0, trailY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+
+    function animateTrail() {
+        trailX += (mouseX - trailX) * 0.1;
+        trailY += (mouseY - trailY) * 0.1;
+        
+        cursorTrail.style.left = trailX - 10 + 'px';
+        cursorTrail.style.top = trailY - 10 + 'px';
+        
+        requestAnimationFrame(animateTrail);
+    }
+    animateTrail();
+
+    // Theme Toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    
+    themeToggle.addEventListener('click', () => {
+        body.classList.toggle('light-theme');
+        themeToggle.classList.toggle('light');
+    });
+
+    // Scroll Progress Bar
+    const scrollProgressBar = document.getElementById('scroll-progress-bar');
+    
+    function updateScrollProgress() {
+        const scrollTop = window.pageYOffset;
+        const docHeight = document.body.scrollHeight - window.innerHeight;
+        const scrollPercent = (scrollTop / docHeight) * 100;
+        scrollProgressBar.style.width = scrollPercent + '%';
+    }
+
+    // Counter Animation
+    function animateCounter(counter) {
+        const target = parseInt(counter.getAttribute('data-target'));
+        const increment = target / 200;
+        let current = 0;
+
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+                current = target;
+                clearInterval(timer);
+            }
+            counter.textContent = Math.floor(current);
+        }, 10);
+    }
+
+    // Observe counters for animation
+    const counters = document.querySelectorAll('.counter');
+    const counterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCounter(entry.target);
+                counterObserver.unobserve(entry.target);
+            }
+        });
+    });
+
+    counters.forEach(counter => {
+        counterObserver.observe(counter);
+    });
+
+    // Magnetic Button Effect
+    const magneticBtns = document.querySelectorAll('.magnetic-btn');
+    
+    magneticBtns.forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+            const rect = btn.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            
+            btn.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px)`;
+        });
+        
+        btn.addEventListener('mouseleave', () => {
+            btn.style.transform = 'translate(0, 0)';
+        });
+    });
+
+    // Button Ripple Effect
+    const buttons = document.querySelectorAll('.btn');
+    
+    buttons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const rect = btn.getBoundingClientRect();
+            const ripple = btn.querySelector('.btn-ripple');
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - size / 2;
+            const y = e.clientY - rect.top - size / 2;
+            
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            ripple.style.transform = 'scale(0)';
+            
+            void ripple.offsetWidth; // Trigger reflow
+            ripple.style.transform = 'scale(4)';
+        });
+    });
+
+    // Enhanced Typewriter Effect
+    class AdvancedTypeWriter {
         constructor(element, words, wait = 3000) {
             this.element = element;
             this.words = words;
@@ -25,11 +247,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             this.element.innerHTML = `<span class="txt">${this.txt}</span>`;
 
-            let typeSpeed = 150;
-
-            if (this.isDeleting) {
-                typeSpeed /= 2;
-            }
+            let typeSpeed = this.isDeleting ? 50 : 100;
 
             if (!this.isDeleting && this.txt === fullTxt) {
                 typeSpeed = this.wait;
@@ -44,11 +262,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Initialize TypeWriter
+    // Initialize Enhanced TypeWriter
     const typeWriter = document.querySelector('.typewriter');
     if (typeWriter) {
         const words = JSON.parse(typeWriter.getAttribute('data-text'));
-        new TypeWriter(typeWriter, words, 2000);
+        new AdvancedTypeWriter(typeWriter, words, 2000);
     }
 
     // Parallax Effect for Hero Background
@@ -74,16 +292,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Add data-reveal attributes to elements that should animate
-    const animatedElements = document.querySelectorAll('.hero-greeting, .hero-title, .hero-subtitle-wrapper, .hero-description, .hero-stats, .hero-buttons, .social-links, .hero-image');
-    animatedElements.forEach((el, index) => {
-        el.setAttribute('data-reveal', 'true');
-        el.style.transitionDelay = `${index * 0.1}s`;
-    });
-
     // Performance-optimized scroll handler
     let ticking = false;
     function updateOnScroll() {
+        updateScrollProgress();
         handleParallax();
         handleScrollAnimations();
         highlightNavLink();
@@ -200,6 +412,68 @@ document.addEventListener('DOMContentLoaded', function() {
     const animatedCards = document.querySelectorAll('.about-item, .project-card, .tech-item, .stat-card, .languages-card');
     animatedCards.forEach(el => {
         el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(el);
+    });
+
+    // Easter Egg - Konami Code
+    let konamiCode = [];
+    const konamiSequence = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65]; // ↑↑↓↓←→←→BA
+    
+    document.addEventListener('keydown', (e) => {
+        konamiCode.push(e.keyCode);
+        if (konamiCode.length > konamiSequence.length) {
+            konamiCode.shift();
+        }
+        
+        if (konamiCode.join(',') === konamiSequence.join(',')) {
+            // Easter egg activated!
+            document.body.style.filter = 'hue-rotate(180deg)';
+            setTimeout(() => {
+                document.body.style.filter = 'none';
+            }, 3000);
+            konamiCode = [];
+        }
+    });
+
+    // Performance monitoring
+    function logPerformance() {
+        if (window.performance && window.performance.timing) {
+            const timing = window.performance.timing;
+            const loadTime = timing.loadEventEnd - timing.navigationStart;
+            console.log(`Page load time: ${loadTime}ms`);
+        }
+    }
+
+    // Initialize everything
+    window.addEventListener('load', () => {
+        logPerformance();
+        // Additional initialization can go here
+    });
+
+    // Responsive particles count
+    function updateParticlesCount() {
+        const width = window.innerWidth;
+        let particleCount = 80;
+        
+        if (width < 768) {
+            particleCount = 30;
+        } else if (width < 1024) {
+            particleCount = 50;
+        }
+        
+        // Update particles if particles.js is available
+        if (window.pJSDom && window.pJSDom[0] && window.pJSDom[0].pJS) {
+            window.pJSDom[0].pJS.particles.number.value = particleCount;
+            window.pJSDom[0].pJS.fn.particlesRefresh();
+        }
+    }
+
+    window.addEventListener('resize', updateParticlesCount);
+    updateParticlesCount();
+
+});
         el.style.transform = 'translateY(30px)';
         el.style.transition = 'all 0.6s ease';
         observer.observe(el);
