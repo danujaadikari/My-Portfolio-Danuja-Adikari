@@ -9,8 +9,37 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
 </head>
 <body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-container">
+            <div class="loading-logo">
+                <span class="loading-text">DA</span>
+            </div>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+            <p class="loading-message">Crafting Digital Experiences...</p>
+        </div>
+    </div>
+
+    <!-- Cursor Trail -->
+    <div id="cursor-trail"></div>
+    
+    <!-- Theme Toggle -->
+    <div class="theme-toggle" id="theme-toggle">
+        <i class="fas fa-sun"></i>
+        <i class="fas fa-moon"></i>
+    </div>
+
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress">
+        <div class="scroll-progress-bar" id="scroll-progress-bar"></div>
+    </div>
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
@@ -35,6 +64,9 @@
 
     <!-- Hero Section -->
     <section id="home" class="hero">
+        <!-- Particles Background -->
+        <div id="particles-js"></div>
+        
         <!-- Animated Background -->
         <div class="hero-bg">
             <div class="floating-shapes">
@@ -44,67 +76,83 @@
                 <div class="shape shape-4"></div>
                 <div class="shape shape-5"></div>
             </div>
+            <div class="matrix-rain">
+                <canvas id="matrix-canvas"></canvas>
+            </div>
         </div>
         
         <div class="hero-container">
             <div class="hero-content">
-                <div class="hero-text">
+                <div class="hero-text" data-aos="fade-right" data-aos-duration="1000">
                     <div class="hero-greeting">
                         <span class="wave">👋</span>
                         <span class="greeting-text">Hello, I'm</span>
                     </div>
                     <h1 class="hero-title">
-                        <span class="gradient-text typing-text">Danuja Adikari</span>
+                        <span class="gradient-text typing-text glitch" data-text="Danuja Adikari">Danuja Adikari</span>
                     </h1>
                     <div class="hero-subtitle-wrapper">
                         <p class="hero-subtitle">
-                            <span class="typewriter" data-text='["Mobile App Developer", "Cybersecurity Enthusiast", "AgriTech Innovator", "Problem Solver"]'></span>
+                            <span class="typewriter" data-text='["Mobile App Developer", "Cybersecurity Enthusiast", "AgriTech Innovator", "Problem Solver", "Full-Stack Developer", "UI/UX Designer"]'></span>
                         </p>
                     </div>
                     <p class="hero-description">
                         Passionate about creating innovative solutions that make a difference in child safety, digital wellbeing, and agricultural technology. Let's build something amazing together!
                     </p>
-                    <div class="hero-stats">
+                    <div class="hero-stats" data-aos="fade-up" data-aos-delay="300">
                         <div class="stat-item">
-                            <span class="stat-number">2+</span>
+                            <span class="stat-number counter" data-target="2">0</span><span class="stat-plus">+</span>
                             <span class="stat-label">Years Experience</span>
                         </div>
                         <div class="stat-item">
-                            <span class="stat-number">10+</span>
+                            <span class="stat-number counter" data-target="15">0</span><span class="stat-plus">+</span>
                             <span class="stat-label">Projects</span>
                         </div>
                         <div class="stat-item">
-                            <span class="stat-number">100%</span>
+                            <span class="stat-number counter" data-target="100">0</span><span class="stat-plus">%</span>
                             <span class="stat-label">Dedication</span>
                         </div>
+                        <div class="stat-item">
+                            <span class="stat-number counter" data-target="50">0</span><span class="stat-plus">+</span>
+                            <span class="stat-label">Happy Clients</span>
+                        </div>
                     </div>
-                    <div class="hero-buttons">
-                        <a href="#projects" class="btn btn-primary pulse-btn">
+                    <div class="hero-buttons" data-aos="fade-up" data-aos-delay="500">
+                        <a href="#projects" class="btn btn-primary pulse-btn magnetic-btn">
                             <i class="fas fa-code"></i>
-                            View My Work
+                            <span>View My Work</span>
+                            <div class="btn-ripple"></div>
                         </a>
-                        <a href="#contact" class="btn btn-secondary glow-btn">
+                        <a href="#contact" class="btn btn-secondary glow-btn magnetic-btn">
                             <i class="fas fa-paper-plane"></i>
-                            Get In Touch
+                            <span>Get In Touch</span>
+                            <div class="btn-ripple"></div>
                         </a>
-                        <a href="mailto:danujaadikari2001@gmail.com" class="btn btn-outline">
+                        <a href="mailto:danujaadikari2001@gmail.com" class="btn btn-outline magnetic-btn">
                             <i class="fas fa-download"></i>
-                            Download CV
+                            <span>Download CV</span>
+                            <div class="btn-ripple"></div>
                         </a>
                     </div>
-                    <div class="social-links">
-                        <a href="https://github.com/danujaadikari" target="_blank" class="social-link">
+                    <div class="social-links" data-aos="fade-up" data-aos-delay="700">
+                        <a href="https://github.com/danujaadikari" target="_blank" rel="noopener" class="social-link magnetic-btn" data-tooltip="GitHub" title="GitHub Profile">
                             <i class="fab fa-github"></i>
                         </a>
-                        <a href="https://linkedin.com/in/danuja-adikari" target="_blank" class="social-link">
+                        <a href="https://linkedin.com/in/danuja-adikari" target="_blank" rel="noopener" class="social-link magnetic-btn" data-tooltip="LinkedIn" title="LinkedIn Profile">
                             <i class="fab fa-linkedin"></i>
                         </a>
-                        <a href="mailto:danujaadikari2001@gmail.com" class="social-link">
+                        <a href="mailto:danujaadikari2001@gmail.com" class="social-link magnetic-btn" data-tooltip="Email" title="Send Email">
                             <i class="fas fa-envelope"></i>
+                        </a>
+                        <a href="https://twitter.com/danujaadikari" target="_blank" rel="noopener" class="social-link magnetic-btn" data-tooltip="Twitter" title="Twitter Profile">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://instagram.com/danujaadikari" target="_blank" rel="noopener" class="social-link magnetic-btn" data-tooltip="Instagram" title="Instagram Profile">
+                            <i class="fab fa-instagram"></i>
                         </a>
                     </div>
                 </div>
-                <div class="hero-image">
+                <div class="hero-image" data-aos="fade-left" data-aos-duration="1000">
                     <div class="hero-avatar">
                         <div class="avatar-wrapper">
                             <div class="avatar-circle">
@@ -114,26 +162,34 @@
                                 </div>
                             </div>
                             <div class="avatar-ring"></div>
+                            <div class="avatar-glow"></div>
                             <div class="tech-orbits">
                                 <div class="orbit orbit-1">
-                                    <div class="tech-icon"><i class="fab fa-react"></i></div>
+                                    <div class="tech-icon floating"><i class="fab fa-react"></i></div>
                                 </div>
                                 <div class="orbit orbit-2">
-                                    <div class="tech-icon"><i class="fab fa-js-square"></i></div>
+                                    <div class="tech-icon floating"><i class="fab fa-js-square"></i></div>
                                 </div>
                                 <div class="orbit orbit-3">
-                                    <div class="tech-icon"><i class="fas fa-shield-alt"></i></div>
+                                    <div class="tech-icon floating"><i class="fas fa-shield-alt"></i></div>
                                 </div>
                                 <div class="orbit orbit-4">
-                                    <div class="tech-icon"><i class="fas fa-mobile-alt"></i></div>
+                                    <div class="tech-icon floating"><i class="fas fa-mobile-alt"></i></div>
+                                </div>
+                                <div class="orbit orbit-5">
+                                    <div class="tech-icon floating"><i class="fab fa-node-js"></i></div>
+                                </div>
+                                <div class="orbit orbit-6">
+                                    <div class="tech-icon floating"><i class="fab fa-python"></i></div>
                                 </div>
                             </div>
+                            <div class="hologram-effect"></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="scroll-indicator">
+        <div class="scroll-indicator" data-aos="fade-up" data-aos-delay="1000">
             <div class="scroll-arrow bounce-animation"></div>
             <span class="scroll-text">Scroll Down</span>
         </div>
