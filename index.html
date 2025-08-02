@@ -35,29 +35,98 @@
 
     <!-- Hero Section -->
     <section id="home" class="hero">
+        <!-- Animated Background -->
+        <div class="hero-bg">
+            <div class="floating-shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
+                <div class="shape shape-4"></div>
+                <div class="shape shape-5"></div>
+            </div>
+        </div>
+        
         <div class="hero-container">
             <div class="hero-content">
                 <div class="hero-text">
+                    <div class="hero-greeting">
+                        <span class="wave">👋</span>
+                        <span class="greeting-text">Hello, I'm</span>
+                    </div>
                     <h1 class="hero-title">
-                        Hi, I'm <span class="gradient-text">Danuja Adikari</span>
+                        <span class="gradient-text typing-text">Danuja Adikari</span>
                     </h1>
-                    <p class="hero-subtitle">
-                        Mobile App Developer | Cybersecurity Enthusiast | AgriTech Innovator
-                    </p>
+                    <div class="hero-subtitle-wrapper">
+                        <p class="hero-subtitle">
+                            <span class="typewriter" data-text='["Mobile App Developer", "Cybersecurity Enthusiast", "AgriTech Innovator", "Problem Solver"]'></span>
+                        </p>
+                    </div>
                     <p class="hero-description">
-                        Passionate about creating innovative solutions that make a difference in child safety, digital wellbeing, and agricultural technology.
+                        Passionate about creating innovative solutions that make a difference in child safety, digital wellbeing, and agricultural technology. Let's build something amazing together!
                     </p>
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">2+</span>
+                            <span class="stat-label">Years Experience</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">10+</span>
+                            <span class="stat-label">Projects</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">100%</span>
+                            <span class="stat-label">Dedication</span>
+                        </div>
+                    </div>
                     <div class="hero-buttons">
-                        <a href="#projects" class="btn btn-primary">View My Work</a>
-                        <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+                        <a href="#projects" class="btn btn-primary pulse-btn">
+                            <i class="fas fa-code"></i>
+                            View My Work
+                        </a>
+                        <a href="#contact" class="btn btn-secondary glow-btn">
+                            <i class="fas fa-paper-plane"></i>
+                            Get In Touch
+                        </a>
+                        <a href="mailto:danujaadikari2001@gmail.com" class="btn btn-outline">
+                            <i class="fas fa-download"></i>
+                            Download CV
+                        </a>
+                    </div>
+                    <div class="social-links">
+                        <a href="https://github.com/danujaadikari" target="_blank" class="social-link">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://linkedin.com/in/danuja-adikari" target="_blank" class="social-link">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="mailto:danujaadikari2001@gmail.com" class="social-link">
+                            <i class="fas fa-envelope"></i>
+                        </a>
                     </div>
                 </div>
                 <div class="hero-image">
                     <div class="hero-avatar">
-                        <div class="avatar-circle">
-                            <img src="src/avatar.jpg" alt="Danuja Adikari" class="avatar-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                            <div class="avatar-placeholder" style="display: none;">
-                                <i class="fas fa-user"></i>
+                        <div class="avatar-wrapper">
+                            <div class="avatar-circle">
+                                <img src="src/avatar.jpg" alt="Danuja Adikari" class="avatar-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div class="avatar-placeholder" style="display: none;">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                            </div>
+                            <div class="avatar-ring"></div>
+                            <div class="tech-orbits">
+                                <div class="orbit orbit-1">
+                                    <div class="tech-icon"><i class="fab fa-react"></i></div>
+                                </div>
+                                <div class="orbit orbit-2">
+                                    <div class="tech-icon"><i class="fab fa-js-square"></i></div>
+                                </div>
+                                <div class="orbit orbit-3">
+                                    <div class="tech-icon"><i class="fas fa-shield-alt"></i></div>
+                                </div>
+                                <div class="orbit orbit-4">
+                                    <div class="tech-icon"><i class="fas fa-mobile-alt"></i></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -65,7 +134,8 @@
             </div>
         </div>
         <div class="scroll-indicator">
-            <div class="scroll-arrow"></div>
+            <div class="scroll-arrow bounce-animation"></div>
+            <span class="scroll-text">Scroll Down</span>
         </div>
     </section>
 
